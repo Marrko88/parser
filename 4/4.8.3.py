@@ -1,26 +1,23 @@
 import requests
 from bs4 import BeautifulSoup
 
-def scrape_table(url):
+def scrape(url):
     response = requests.get(url)
     response.encoding = 'utf-8'
     soup = BeautifulSoup(response.text, 'html.parser')
-    # Поиск первой таблицы на веб-странице с атрибутом 'border' равным '3'
-    table = soup.find('table')
-    # Поиск всех строк (tr) в таблице и сохранение их в переменной rows
-    rows = table.find_all('tr')
-    data = []
-    # Проход по всем строкам таблицы, начиная со второй
-    for row in rows[1:]:
-        d = row.find_all('td')
-        for el in d[:1]:
-            int_i = float(el.text)
-            data.append(int_i)
-    return data
+
+    table = soup.find('div', class_='main')
+
+    items = table.find_all('div', class_='item')
+
+    for row in items:
+        input_my = row.find('input')
+        input_my.
 
 
-url = 'https://parsinger.ru/table/1/index.html'
-print(sum(scrape_table(url)))
+
+url = 'https://parsinger.ru/table/2/index.html'
+scrape(url)
 
 
 
